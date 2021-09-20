@@ -1,8 +1,9 @@
 # MSI-B460-MORTAR-10700-UHD630
 
-### 平台配置 Big Sur 11.5 (OC 0.7.2)
+### 平台配置 Big Sur 11.5 (OC 0.7.3)
 ##### 因为是从7代7700+MSIB250M+RX560（Mojave）换平台到10代10700的。这个过程中因为10代没有原生支持Mojave，所以直接通过Mojave仿冒CPU升级到BigSur11.5,这个过程也遇到不少问题，主要在于显卡驱动（UHD630，放弃RX560），网卡驱动，以及USB驱动。仅供参考，PS：EFI中三码需要重新生成。
-##### 当前EFI配置主要参考官方Cometlake的配置 https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#deviceproperties 
+##### 当前EFI配置主要参考官方Cometlake的配置 https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#deviceproperties
+##### 整机待机在40W左右，日常使用在40W～80W之间,使用360水冷，风扇基本不转。变频节能接近完，也是我期望的。 
 ```
 CPU i7-10700
 主板 MSIB460MORTAR
