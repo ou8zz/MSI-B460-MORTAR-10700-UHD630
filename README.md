@@ -3,13 +3,13 @@
 ### 平台配置 Big Sur 11.5 (OC 0.7.3)
 ##### 因为是从7代7700+MSIB250M+RX560（Mojave）换平台到10代10700的。这个过程中因为10代没有原生支持Mojave，所以直接通过Mojave仿冒CPU升级到BigSur11.5,这个过程也遇到不少问题，主要在于显卡驱动（UHD630，放弃RX560），网卡驱动，以及USB驱动。仅供参考，PS：EFI中三码需要重新生成。
 ##### 当前EFI配置主要参考官方Cometlake的配置 https://dortania.github.io/OpenCore-Install-Guide/config.plist/comet-lake.html#deviceproperties
-##### 整机待机在40W左右，日常使用在40W～80W之间,使用360水冷，风扇基本不转。变频节能接近完，也是我期望的。 
+##### 整机待机在40W左右，日常使用在40W～80W之间,使用360水冷，风扇基本不转。变频节能接近完美，也是我期望的。 
 ```
 CPU i7-10700
 主板 MSIB460MORTAR
 内存 Kingston 8G（2400-CL16） * 2 / Tigo 8G（2400-CL16） * 2
 显卡 核显UHD 630
-网卡 博通BCM943224PCIEBT2BX (淘宝63带pci卡)
+网卡 博通BCM943224PCIEBT2BX (淘宝63带pci卡，但是只有100M)
 SSD SanDisk Extreme Pro 500GB
 ```
 
@@ -89,4 +89,4 @@ SSD SanDisk Extreme Pro 500GB
 + 使用AirportBrcmFixup.kext之前需要对这个kext进行处理，不然会panic，这个我参考的这位大哥的视频 ! https://www.bilibili.com/video/BV1k64y1D738/ 主要移除了里面AirPortBrcm4360_Injector.kext
 
 ### USB驱动
-+ 新系统需要定制USB，这个相对比较简单，先需要USBInjectAll.kext 并且设置XhciPortLimit为yes，然后使用HackinTool打开USB，把所有USB口通过对应的USB设备插拔标记（2.0和3.0需要相应设备），然后将无用的USB设备进行移除（这里有很多人都说USB口有15个的限制，但是又有人说很多USB口是公用走的通道，不在乎15口限制，我因为没有那么多USB口，所以没有做验证，暂且认为15口限制吧），最终导出得到USBPorts.kext和SSDT-EC-USBX.aml，SSDT-UIAC.aml然后分别进行导入，再删除USBInjectAll.kext设置XhciPortLimit为no即可完成USB定制。流程就是这样，这部分网上教程比较多可以随意找到。
++ 新系统需要定制USB，这个相对显卡驱动比较简单，先需要USBInjectAll.kext 并且设置XhciPortLimit为yes，然后使用HackinTool打开USB，把所有USB口通过对应的USB设备插拔标记（2.0和3.0需要相应设备），然后将无用的USB设备进行移除（这里有很多人都说USB口有15个的限制，但是又有人说很多USB口是公用走的通道，不在乎15口限制，我因为没有那么多USB口，所以没有做验证，暂且认为15口限制吧），最终导出得到USBPorts.kext和SSDT-EC-USBX.aml，SSDT-UIAC.aml然后分别进行导入，再删除USBInjectAll.kext设置XhciPortLimit为no即可完成USB定制。流程就是这样，这部分网上教程比较多可以随意找到。
