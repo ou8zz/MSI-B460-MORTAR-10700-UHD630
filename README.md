@@ -44,7 +44,7 @@ SSD SanDisk Extreme Pro 500GB
   <string>Intel CoffeeLake-H GT2 [UHD Graphics 630]</string>
 </dict>
 ```
-+ 问题2的后续改进：还是针对集成显卡UHD630。升级到最新Lilu.kext,WhateverGreen.kext,AppleALC.kext又通过一段时间的折腾，我发现这并不是因为缓冲帧的问题，其实10代UHD630本身就能使用07009B3E驱动，问题在于4K分辨率问题，我历经N次探索发现微星的这个B460M迫击炮在BIOS里虽然有GFlook的设置，但是却没有DVMT内存相关配置，只有一个集显的默认1-64M显存设置，我知道再怎么调试这个缓冲帧也无用，因为主板默认的DVMT内存没给够。通过HackinTool查看[应用补丁]-[基本信息]看到动态显存只有19M，这个容量不足以驱动4K显示器，但是微星的这个主板没法设置这个值，我查阅了一些资料只能修改BIOS或者使用EFI-Shell 可以setup_var修改DVMT Pre-Allocated的大小。但是自己修改BIOS不现实，而EFI-Shell这个我没有进行尝试了。折腾NAS去了。我通过多次调试以下缓冲帧可以实现自动到最高57M的动态显存，暂时能保证4K的输出，但是偶尔还是会有息屏，目前只能这样不影响使用，先接受了（希望微星后面BIOS能放出对DVMT的内存设置）。后续如果有更好的方案我会再进行补充。
++ 问题2的后续改进：还是针对集成显卡UHD630。升级到最新Lilu.kext,WhateverGreen.kext,AppleALC.kext又通过一段时间的折腾，我发现这并不是因为缓冲帧的问题，其实10代UHD630本身就能使用07009B3E驱动，问题在于4K分辨率问题，我历经N次探索发现微星的这个B460M迫击炮在BIOS里虽然有GFlook的设置，但是却没有DVMT内存相关配置，只有一个集显的默认1-64M显存设置，我知道再怎么调试这个缓冲帧也无用，因为主板默认的DVMT内存没给够。通过HackinTool查看[应用补丁]-[基本信息]看到动态显存只有19M，这个容量不足以驱动4K显示器，但是微星的这个主板没法设置这个值，我查阅了一些资料只能修改BIOS或者使用EFI-Shell 可以setup_var修改DVMT Pre-Allocated的大小。但是自己修改BIOS不现实，而EFI-Shell这个感觉有破坏性我没有进行尝试了。所以我尝试framebuffer-stolenmem:00003001 -> 00000008(19M改128M)，实际我调试59M～128M均不能进入系统，没找到原因，头疼折腾NAS去了。只能调试以下缓冲帧可以实现自动到最高57M的动态显存，暂时能保证4K的输出，但是偶尔还是会有息屏，目前只能这样不影响使用，先接受了（希望微星后面BIOS能放出对DVMT的内存设置）。后续如果有更好的方案我会再进行补充。
 ```
 <key>PciRoot(0x0)/Pci(0x2,0x0)</key>
 <dict>
